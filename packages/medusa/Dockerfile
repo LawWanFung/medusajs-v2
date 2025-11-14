@@ -21,7 +21,7 @@ COPY www www
 COPY integration-tests integration-tests
 
 # 4. Install all dependecies
-RUN yarn install --immutable --immutable-cache
+RUN yarn install --immutable
 
 # ------------------------------------------------------------------------
 # Stage 2: Base Builder Phase (負責所有 Apps 嘅共同依賴安裝)

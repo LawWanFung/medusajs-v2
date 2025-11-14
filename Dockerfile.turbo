@@ -41,7 +41,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 9000
-CMD ["yarn", "workspace", "@medusajs/medusa", "start"]
+CMD ["yarn", "workspace", "@medusajs/medusa", "serve"]
 
 # -----------------------------
 # Stage 3b: Runtime medusa_admin
@@ -57,4 +57,4 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 9001
-CMD ["yarn", "workspace", "@medusajs/admin", "start"]
+CMD ["yarn", "workspace", "@medusajs/dashboard", "serve"]

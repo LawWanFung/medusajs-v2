@@ -25,8 +25,8 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/app:cached
-      - /app/node_modules:cached
+      - .:/app
+      - /app/node_modules
     networks:
       - dokploy-network
   admin:
@@ -47,8 +47,8 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/app:cached
-      - /app/node_modules:cached
+      - .:/app
+      - /app/node_modules
     networks:
       - dokploy-network
 

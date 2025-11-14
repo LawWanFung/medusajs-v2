@@ -10,9 +10,10 @@ services:
   medusa:
     # <<: *APP_BUILD_BASE # 引用 Base 設定
     #  working_dir: /app
+    container_name: medusa_core
     build:
-      context: https://github.com/LawWanFung/medusajs-v2.git
-      dockerfile: ./packages/medusa/Dockerfile
+      context: https://github.com/LawWanFung/medusajs-v2.git#docker
+      dockerfile: packages/medusa/Dockerfile
     container_name: medusa_core
     restart: unless-stopped
     ports:

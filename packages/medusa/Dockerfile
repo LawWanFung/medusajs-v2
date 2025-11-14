@@ -36,6 +36,7 @@ FROM base_builder AS builder
 # 1. 設定工作目錄為 Monorepo 根目錄
 WORKDIR /app
 # 2. Build App
+RUN yarn workspaces focus --all
 RUN yarn workspace @medusajs/medusa run build
 
 # ------------------------------------------------------------------------

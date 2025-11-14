@@ -7,18 +7,8 @@ RUN corepack enable
 
 WORKDIR /app
 
-# Copy root files
-COPY package.json yarn.lock turbo.json script.sh .yarnrc.yml _tsconfig.base.json tsconfig.json tsconfig.build.json ./
-
-# Copy patches and .changeset
-COPY .yarn .yarn
-COPY .changeset .changeset
-
-# Copy source
-COPY packages packages
-COPY scripts scripts
-COPY www www
-COPY integration-tests integration-tests
+# Copy all files
+COPY . .
 
 # Install all dependencies once
 RUN yarn install --immutable

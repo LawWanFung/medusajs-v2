@@ -9,7 +9,7 @@ RUN corepack enable
 WORKDIR /app
 
 # 2. 複製所有 App 共同嘅檔案結構 
-COPY package.json yarn.lock turbo.json script.sh .
+COPY package.json yarn.lock turbo.json script.sh ./.yarn ./.changeset .
 
 # 3. 複製所有 App/Packages 嘅 Source Code
 # ⚠️ 注意：呢度最好係複製埋所有 source code，確保 pnpm 可以正確鏈接

@@ -9,7 +9,9 @@ RUN corepack enable
 WORKDIR .
 
 # 2. 複製所有 App 共同嘅檔案結構 
-COPY package.json yarn.lock turbo.json script.sh .yarn .yarnrc.yml .changeset .
+COPY .yarn .yarn
+COPY .changeset .changeset
+COPY package.json yarn.lock turbo.json script.sh  .yarnrc.yml .
 
 RUN ls -la
 RUN ls -la .yarn/patches

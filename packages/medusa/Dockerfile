@@ -18,15 +18,5 @@ COPY scripts /app/scripts
 COPY www /app/www
 COPY integration-tests /appl/integration-tests
 
-# 4. 創建 pnpm-store 目錄並授權 (為咗 cache mount 準備)
-RUN mkdir -p /app/.pnpm-store \
-    && chown -R node:node /app/.pnpm-store
-
-# 5. 安裝所有 Apps 嘅依賴！呢個係最費時嘅步驟，只做一次。
-# pnpm install 會設置好所有 Apps 需要嘅 node_modules 鏈接
-RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store \
-    pnpm install --frozen-lockfile
-
-# 呢個 Base Stage 已經有晒所有 dependencies。
-# 之後你所有嘅 App Dockerfile (e.g., stripe/Dockerfile) 只需要用 'FROM base_builder' 開始，
-# 然後直接跑 'pnpm --filter <app-name> run build' 就得，唔使再 install！
+# 4. Install all dependecies
+RUN yarn install --frozen-lockfile

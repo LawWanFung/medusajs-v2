@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/devcontainers/typescript-node:16 AS base_builder
 RUN corepack enable 
 
 # 1. 設定工作目錄為 Monorepo 根目錄
-WORKDIR /app
+WORKDIR .
 
 # 2. 複製所有 App 共同嘅檔案結構 
 COPY package.json yarn.lock turbo.json script.sh .yarn .yarnrc.yml .changeset .
@@ -16,10 +16,10 @@ RUN ls -la .yarn/patches
 
 # 3. 複製所有 App/Packages 嘅 Source Code
 # ⚠️ 注意：呢度最好係複製埋所有 source code，確保 pnpm 可以正確鏈接
-COPY packages /app/packages
-COPY scripts /app/scripts
-COPY www /app/www
-COPY integration-tests /app/integration-tests
+COPY packages ./packages
+COPY scripts ./scripts
+COPY www ./www
+COPY integration-tests ./integration-tests
 
 # 4. Install all dependecies
 RUN yarn install --immutable --immutable-cache

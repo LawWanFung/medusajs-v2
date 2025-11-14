@@ -38,7 +38,7 @@ WORKDIR /app
 # 2. Build App
 # RUN yarn workspaces focus --all
 # RUN yarn workspace @medusajs/medusa run build
-RUN yarn turbo run build --filter=... --include-dependencies
+RUN yarn turbo run build --filter=@medusajs/medusa --include-dependencies
 
 # ------------------------------------------------------------------------
 # Stage 2: Runtime

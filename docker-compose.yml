@@ -12,7 +12,7 @@ services:
     #  working_dir: /app
     container_name: medusa_core
     build:
-      context: https://github.com/LawWanFung/medusajs-v2.git
+      context: https://github.com/LawWanFung/medusajs-v2.git#docker
       dockerfile: packages/medusa/Dockerfile
     container_name: medusa_core
     restart: unless-stopped
@@ -28,11 +28,11 @@ services:
       - .:/server
       - /server/node_modules
     networks:
-      - medusa_network
+      - dokploy-network
 
 volumes:
   postgres_data:
 
 networks:
-  medusa_network:
-    driver: bridge
+  dokploy-network:
+    external: true

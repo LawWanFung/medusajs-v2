@@ -1,6 +1,6 @@
 # Stage 1: Base Builder Phase (負責所有 Apps 嘅共同依賴安裝)
 # 用一個強大嘅 Base Image 嚟做 Build
-FROM mcr.microsoft.com/devcontainers/typescript-node:16 AS base_builder
+FROM mcr.microsoft.com/devcontainers/typescript-node:20 AS base_builder
 
 # 確保 package mamanger 喺 PATH
 RUN corepack enable 
@@ -36,19 +36,25 @@ FROM base_builder AS builder
 # 1. 設定工作目錄為 Monorepo 根目錄
 WORKDIR /app
 # 2. Build App
-RUN yarn workspaces focus --all
-RUN yarn workspace @medusajs/medusa run build
+# RUN yarn workspaces focus --all
+# RUN yarn workspace @medusajs/medusa run build
+RUN yarn turbo run build --filter=... --include-dependencies
 
 # ------------------------------------------------------------------------
 # Stage 2: Runtime
-FROM node:16-slim AS final
+FROM node:20-slim AS final
 
 RUN corepack enable yarn
 
 WORKDIR /app
 
-COPY --from=builder /app .
+#COPY --from=builder /app .
+# Copy only medusa build artifacts + node_modules
+COPY --from=builder /app/packages/medusa ./packages/medusa
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 9000
 
-CMD ["yarn","serve"]
+# CMD ["yarn","serve"]
+CMD ["yarn", "workspace", "@medusajs/medusa", "start"]

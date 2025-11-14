@@ -1,6 +1,6 @@
 # Stage 1: Base Builder Phase (負責所有 Apps 嘅共同依賴安裝)
 # 用一個強大嘅 Base Image 嚟做 Build
-FROM Dockerfile AS builder
+FROM ./Dockerfile AS builder
 
 # 確保 package mamanger 喺 PATH
 # RUN corepack enable yarn

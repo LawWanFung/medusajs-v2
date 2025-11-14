@@ -25,7 +25,7 @@ WORKDIR /app
 RUN yarn build 
 # --include-dependencies
 
-RUN ls -al
+# RUN ls -al
 
 # -----------------------------
 # Stage 3a: Runtime medusa_core
@@ -39,6 +39,9 @@ WORKDIR /app
 COPY --from=builder /app/packages/medusa ./packages/medusa
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+
+RUN ls -al
+
 
 EXPOSE 9000
 CMD ["yarn", "workspace", "@medusajs/medusa", "serve"]

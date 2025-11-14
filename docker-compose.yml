@@ -1,14 +1,15 @@
 services:
-  # 💥 2. YAML ANCHOR 錨點：所有 App 嘅共通設定 (移除 pnpm-store volume)
-  x-app-base: &APP_BUILD_BASE
-    working_dir: /app
-    build:
-      context: https://github.com/LawWanFung/medusajs-v2.git
-      # 💥 所有 Apps 嘅 Dockerfile 都會用 Base Builder
-      dockerfile: Dockerfile 
+  # # 💥 2. YAML ANCHOR 錨點：所有 App 嘅共通設定 (移除 pnpm-store volume)
+  # x-app-base: &APP_BUILD_BASE
+  #   working_dir: /app
+  #   build:
+  #     context: https://github.com/LawWanFung/medusajs-v2.git
+  #     # 💥 所有 Apps 嘅 Dockerfile 都會用 Base Builder
+  #     dockerfile: Dockerfile 
 
   medusa:
-    <<: *APP_BUILD_BASE # 引用 Base 設定
+    # <<: *APP_BUILD_BASE # 引用 Base 設定
+    working_dir: /app
     build:
       context: https://github.com/LawWanFung/medusajs-v2.git
       dockerfile: packages/medusa/Dockerfile

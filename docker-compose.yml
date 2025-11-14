@@ -14,7 +14,6 @@ services:
     build:
       context: https://github.com/LawWanFung/medusajs-v2.git#docker
       dockerfile: packages/medusa/Dockerfile
-    container_name: medusa_core
     restart: unless-stopped
     ports:
       - "9000:9000"

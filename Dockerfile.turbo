@@ -4,7 +4,7 @@
 FROM mcr.microsoft.com/devcontainers/typescript-node:16 AS base_builder
 
 RUN corepack enable
-RUN corepack add turbo --global
+RUN yarn add turbo --global
 
 WORKDIR /app
 

@@ -11,6 +11,7 @@ WORKDIR /app
 # 2. 複製所有 App 共同嘅檔案結構 
 COPY package.json yarn.lock turbo.json script.sh .yarn .yarnrc.yml .changeset .
 
+RUN ls -la
 RUN ls -la .yarn/patches
 
 # 3. 複製所有 App/Packages 嘅 Source Code

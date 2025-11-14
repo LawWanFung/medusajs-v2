@@ -11,7 +11,7 @@ WORKDIR /app
 # 2. 複製所有 App 共同嘅檔案結構 
 COPY .yarn .yarn
 COPY .changeset .changeset
-COPY package.json yarn.lock turbo.json script.sh ._tsconfig.base.json .yarnrc.yml ./
+COPY package.json yarn.lock turbo.json script.sh _tsconfig.base.json .yarnrc.yml ./
 
 # 3. 複製所有 App/Packages 嘅 Source Code
 # ⚠️ 注意：呢度最好係複製埋所有 source code，確保 pnpm 可以正確鏈接

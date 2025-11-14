@@ -12,7 +12,7 @@ services:
     #  working_dir: /app
     container_name: medusa_core
     build:
-      context: https://github.com/LawWanFung/medusajs-v2.git#docker
+      context: https://github.com/LawWanFung/medusajs-v2.git
       dockerfile: packages/medusa/Dockerfile
     container_name: medusa_core
     restart: unless-stopped

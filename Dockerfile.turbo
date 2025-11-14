@@ -1,0 +1,64 @@
+# -----------------------------
+# Stage 1: Base Builder
+# -----------------------------
+FROM mcr.microsoft.com/devcontainers/typescript-node:16 AS base_builder
+
+RUN corepack enable
+
+WORKDIR /app
+
+# Copy root files
+COPY package.json yarn.lock turbo.json script.sh .yarnrc.yml _tsconfig.base.json tsconfig.json tsconfig.build.json ./
+
+# Copy patches and .changeset
+COPY .yarn .yarn
+COPY .changeset .changeset
+
+# Copy source
+COPY packages packages
+COPY scripts scripts
+COPY www www
+COPY integration-tests integration-tests
+
+# Install all dependencies once
+RUN yarn install --immutable
+
+# -----------------------------
+# Stage 2: Turbo Build All Packages
+# -----------------------------
+FROM base_builder AS builder
+
+WORKDIR /app
+
+# Run Turbo to build everything; --include-dependencies ensures all deps built
+RUN yarn turbo run build --include-dependencies
+
+# -----------------------------
+# Stage 3a: Runtime medusa_core
+# -----------------------------
+FROM node:20-slim AS medusa_core_runtime
+
+RUN corepack enable
+WORKDIR /app
+
+COPY --from=builder /app/packages/medusa ./packages/medusa
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
+EXPOSE 9000
+CMD ["yarn", "workspace", "@medusajs/medusa", "start"]
+
+# -----------------------------
+# Stage 3b: Runtime medusa_admin
+# -----------------------------
+FROM node:20-slim AS medusa_admin_runtime
+
+RUN corepack enable
+WORKDIR /app
+
+COPY --from=builder /app/packages/admin ./packages/admin
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
+EXPOSE 9001
+CMD ["yarn", "workspace", "@medusajs/admin", "start"]

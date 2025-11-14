@@ -10,10 +10,11 @@ services:
   medusa:
     # <<: *APP_BUILD_BASE # 引用 Base 設定
     #  working_dir: /app
-    container_name: medusa_core
+    # container_name: medusa_core
     build:
       context: https://github.com/LawWanFung/medusajs-v2.git#docker
-      dockerfile: packages/medusa/Dockerfile
+      dockerfile: Dockerfile.turbo
+      target: medusa_core_runtime
     restart: unless-stopped
     ports:
       - "9000:9000"
@@ -24,8 +25,30 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/server
-      - /server/node_modules
+      - .:/app:cached
+      - /app/node_modules:cached
+    networks:
+      - dokploy-network
+  admin:
+    # <<: *APP_BUILD_BASE # 引用 Base 設定
+    #  working_dir: /app
+    # container_name: medusa_core
+    build:
+      context: https://github.com/LawWanFung/medusajs-v2.git#docker
+      dockerfile: Dockerfile.turbo
+      target: medusa_admin_runtime
+    restart: unless-stopped
+    ports:
+      - "9001:9001"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/medusa-store
+      - REDIS_URL=redis://redis:6379
+    env_file:
+      - .env
+    volumes:
+      - .:/app:cached
+      - /app/node_modules:cached
     networks:
       - dokploy-network
 

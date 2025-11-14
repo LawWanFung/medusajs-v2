@@ -56,5 +56,7 @@ COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 9000
 
+RUN script.sh
+
 # CMD ["yarn","serve"]
 CMD ["yarn", "workspace", "@medusajs/medusa", "start"]
